@@ -1,23 +1,37 @@
 function BankAccount (Name, initialDeposit, depositAmount, withdrawalAmount) {
   this.Name = Name;
-  this.initialDeposit = initialDeposit;
-  this.depositAmount = depositAmount;
-  this.withdrawalAmount = withdrawalAmount;
+  this.initialDeposit = parseFloat(initialDeposit);
+  this.depositAmount = parseFloat(depositAmount);
+  this.withdrawalAmount = parseFloat(withdrawalAmount);
   };
 
  BankAccount.prototype.balance = function() {
-   return this.initialDeposit  + this.depositAmount - this.withdrawalAmount
+   return this.initialDeposit + this.depositAmount - this.withdrawalAmount
  };
 
+ function isNotNumber(string) {
+   var regex = /[^0-9.]/;
+   return regex.test(string);
+ }
+
+function realNumber (input) {
+  if (isNotNumber(input)) {
+    return input = 0;
+  } else {
+    return input;
+  }
+}
 
 $(document).ready(function(){
   $("form#bank").submit(function(event){
     event.preventDefault();
 
     var inputtedName = $("input#name").val();
-    var inputtedInitialDeposit = parseInt($("input#initial-deposit").val());
-    var inputtedDepositAmount = parseInt($("input#deposit-amount").val());
-    var inputtedWithdrawalAmount = parseInt($("input#withdrawl-amount").val());
+    var inputtedInitialDeposit = realNumber ( parseFloat($("input#initial-deposit").val()).toFixed(2));
+
+    var inputtedDepositAmount = realNumber ( parseFloat($("input#deposit-amount").val()).toFixed(2));
+
+    var inputtedWithdrawalAmount = realNumber ( parseFloat($("input#withdrawl-amount").val()).toFixed(2));
 
     var newBankAccount = new BankAccount (inputtedName, inputtedInitialDeposit, inputtedDepositAmount, inputtedWithdrawalAmount);
     console.log(newBankAccount)
